@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Samsung Global Network - אישור הרשמה</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <div class="logo">SAMSUNG</div>
+        <div class="subtitle">פרויקט גמר ברשתות ואבטחת מידע | מכללת אמית ירושלים</div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">דף הבית</a></li>
+            <li><a href="contents.html">תוכן עניינים</a></li>
+            <li><a href="replication.html">רפליקציה</a></li>
+            <li><a href="register.html">טופס הרשמה</a></li>
+            <li><a href="admin.html">ניהול</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <!-- מוצג אם הגיעו לעמוד בלי למלא טופס -->
+        <section class="box" id="noData" style="display: none;">
+            <h1>לא נמצאו פרטי הרשמה</h1>
+            <p>כדי לקבל אישור יש למלא קודם את טופס ההרשמה.</p>
+            <a href="register.html" class="btn">למעבר לטופס</a>
+        </section>
+
+        <section class="box success" id="confirmBox" style="display: none;">
+            <h1>ההרשמה התקבלה בהצלחה</h1>
+            <p id="greeting"></p>
+
+            <h2>פרטי החשבון</h2>
+            <table>
+                <tr><th>שדה</th><th>ערך</th></tr>
+                <tr><td>מספר בקשה</td><td id="reqNumber"></td></tr>
+                <tr><td>תאריך</td><td id="reqDate"></td></tr>
+                <tr><td>שם מלא</td><td id="fullName"></td></tr>
+                <tr><td>מספר עובד</td><td id="employeeId"></td></tr>
+                <tr><td>טלפון</td><td id="phone"></td></tr>
+                <tr><td>דוא"ל</td><td id="email"></td></tr>
+                <tr><td>סניף</td><td id="branch"></td></tr>
+                <tr><td>מחלקה</td><td id="department"></td></tr>
+                <tr><td>סוג הרשאה</td><td id="role"></td></tr>
+                <tr><td>שם משתמש</td><td id="username"></td></tr>
+                <tr><td>סיסמה</td><td>********</td></tr>
+            </table>
+
+            <div class="note">
+                מטעמי אבטחת מידע הסיסמה לא מוצגת בעמוד הזה ולא נשמרת בדפדפן.
+                בהתחברות הראשונה תתבקשו להחליף אותה.
+            </div>
+
+            <h2>מה הלאה</h2>
+            <ul class="list">
+                <li>מנהל הרשת של הסניף יגדיר את העמדה שלכם ב-VLAN של המחלקה.</li>
+                <li>החשבון ישוכפל לשרתי שאר הסניפים בתהליך הרפליקציה, כך שתוכלו להתחבר מכל סניף.</li>
+                <li>החיבור מרחוק לרשת יתאפשר רק בחיבור מוצפן.</li>
+            </ul>
+
+            <a href="index.html" class="btn">חזרה לדף הבית</a>
+            <a href="register.html" class="btn btn-gray">הרשמה נוספת</a>
+        </section>
+    </main>
+
+    <footer>
+        <span>מגיש: פורת קלופמן</span>
+        <span>מנחה הפרויקט: </span>
+    </footer>
+
+    <script>
+        var saved = sessionStorage.getItem("registration");
+
+        if (saved === null) {
+            document.getElementById("noData").style.display = "block";
+        } else {
+            var data = JSON.parse(saved);
+
+            // textContent ולא innerHTML, כדי שקוד שהוזן בטופס לא ירוץ בעמוד (הגנה מפני XSS)
+            document.getElementById("greeting").textContent =
+                "שלום " + data.firstName + ", החשבון שלך ברשת של Samsung נפתח בסניף " + data.branch + ".";
+
+            document.getElementById("reqNumber").textContent = "SAM-" + Math.floor(100000 + Math.random() * 900000);
+            document.getElementById("reqDate").textContent = new Date().toLocaleDateString("he-IL");
+            document.getElementById("fullName").textContent = data.firstName + " " + data.lastName;
+            document.getElementById("employeeId").textContent = data.employeeId;
+            document.getElementById("phone").textContent = data.phone;
+            document.getElementById("email").textContent = data.email;
+            document.getElementById("branch").textContent = data.branch;
+            document.getElementById("department").textContent = data.department;
+            document.getElementById("role").textContent = data.role;
+            document.getElementById("username").textContent = data.username;
+
+            document.getElementById("confirmBox").style.display = "block";
+        }
+    </script>
+
+</body>
+</html>

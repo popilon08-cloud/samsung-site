@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Samsung Global Network - רפליקציה</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <div class="logo">SAMSUNG</div>
+        <div class="subtitle">פרויקט גמר ברשתות ואבטחת מידע | מכללת אמית ירושלים</div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">דף הבית</a></li>
+            <li><a href="contents.html">תוכן עניינים</a></li>
+            <li><a href="replication.html" class="active">רפליקציה</a></li>
+            <li><a href="register.html">טופס הרשמה</a></li>
+            <li><a href="admin.html">ניהול</a></li>
+        </ul>
+    </nav>
+
+    <main>
+
+        <section class="box" id="what">
+            <h1>רפליקציה</h1>
+            <h2>מהי רפליקציה</h2>
+            <p>
+                רפליקציה (Replication) היא שכפול של נתונים משרת אחד לשרת אחר או לכמה שרתים,
+                כך שבכל רגע קיים יותר מעותק אחד של אותו מידע. כאשר משהו משתנה בשרת אחד,
+                השינוי מועבר אוטומטית לשאר השרתים.
+            </p>
+            <p>
+                בארגון עם סניפים במדינות שונות, רפליקציה פותרת שתי בעיות. הראשונה היא זמינות:
+                אם שרת או קו תקשורת נופלים, יש עותק של הנתונים במקום אחר. השנייה היא מהירות:
+                עובד בטוקיו מקבל את המידע משרת קרוב ולא צריך לפנות כל פעם לשרת בסיאול.
+            </p>
+
+            <h3>סוגי רפליקציה</h3>
+            <table>
+                <tr>
+                    <th>סוג</th>
+                    <th>איך זה עובד</th>
+                    <th>יתרון</th>
+                    <th>חיסרון</th>
+                </tr>
+                <tr>
+                    <td>סינכרונית</td>
+                    <td>הכתיבה נחשבת גמורה רק אחרי שכל העותקים עודכנו</td>
+                    <td>אין אובדן מידע, כל העותקים זהים</td>
+                    <td>איטית, תלויה במהירות הקו בין הסניפים</td>
+                </tr>
+                <tr>
+                    <td>אסינכרונית</td>
+                    <td>הכתיבה נגמרת מיד, והעדכון נשלח לשאר השרתים אחר כך</td>
+                    <td>מהירה, מתאימה למרחקים גדולים</td>
+                    <td>אם השרת נופל לפני השליחה, השינוי האחרון עלול ללכת לאיבוד</td>
+                </tr>
+                <tr>
+                    <td>מלאה</td>
+                    <td>כל הנתונים מועתקים מחדש</td>
+                    <td>פשוטה, מבטיחה עותק שלם</td>
+                    <td>צורכת הרבה רוחב פס</td>
+                </tr>
+                <tr>
+                    <td>מצטברת</td>
+                    <td>מועברים רק השינויים מאז הפעם הקודמת</td>
+                    <td>חוסכת רוחב פס</td>
+                    <td>תלויה בכך שהעותק הקודם תקין</td>
+                </tr>
+            </table>
+
+            <h3>Single-Master מול Multi-Master</h3>
+            <p>
+                ב-Single-Master יש שרת ראשי אחד שרק בו מותר לשנות נתונים, ושאר השרתים מקבלים ממנו עותק.
+                ב-Multi-Master אפשר לשנות נתונים בכל אחד מהשרתים, והשינויים מסונכרנים ביניהם.
+                Active Directory של Windows Server עובד בשיטת Multi-Master: אפשר לפתוח משתמש
+                בכל אחד משרתי ה-Domain Controller, והמשתמש יגיע לכל השאר.
+            </p>
+        </section>
+
+        <section class="box" id="samsung">
+            <h2>הרפליקציה ברשת של Samsung</h2>
+            <p>
+                המטה בסיאול מחזיק את השרתים הראשיים של הארגון. מהם הנתונים משוכפלים לשאר הסניפים
+                דרך הרשת שמחברת את כולם. כך עובד שנרשם בתל אביב יכול להתחבר עם אותו
+                שם משתמש וסיסמה גם כשהוא מגיע לסניף בלונדון.
+            </p>
+
+            <div class="diagram">
+                <svg viewBox="0 0 720 430" xmlns="http://www.w3.org/2000/svg" font-family="Arial" font-size="15">
+                    <!-- קווי רפליקציה -->
+                    <g stroke="#1428a0" stroke-width="3" stroke-dasharray="8 6">
+                        <line x1="360" y1="215" x2="120" y2="80"/>
+                        <line x1="360" y1="215" x2="600" y2="80"/>
+                        <line x1="360" y1="215" x2="90" y2="250"/>
+                        <line x1="360" y1="215" x2="630" y2="250"/>
+                        <line x1="360" y1="215" x2="230" y2="380"/>
+                        <line x1="360" y1="215" x2="490" y2="380"/>
+                    </g>
+
+                    <!-- סיאול במרכז -->
+                    <rect x="270" y="175" width="180" height="80" rx="10" fill="#1428a0"/>
+                    <text x="360" y="208" fill="white" text-anchor="middle" font-weight="bold" font-size="18">סיאול</text>
+                    <text x="360" y="232" fill="white" text-anchor="middle" font-size="13">שרתים ראשיים</text>
+
+                    <!-- סניפים מורכבים -->
+                    <rect x="40" y="45" width="160" height="65" rx="10" fill="white" stroke="#1428a0" stroke-width="3"/>
+                    <text x="120" y="75" text-anchor="middle" font-weight="bold">סן חוזה</text>
+                    <text x="120" y="96" text-anchor="middle" font-size="12">שרת עותק</text>
+
+                    <rect x="520" y="45" width="160" height="65" rx="10" fill="white" stroke="#e08a00" stroke-width="3"/>
+                    <text x="600" y="75" text-anchor="middle" font-weight="bold">בנגלור</text>
+                    <text x="600" y="96" text-anchor="middle" font-size="12">שרת עותק | IPv6</text>
+
+                    <!-- סניפים פשוטים -->
+                    <rect x="20" y="220" width="140" height="60" rx="10" fill="white" stroke="#18a058" stroke-width="3"/>
+                    <text x="90" y="256" text-anchor="middle" font-weight="bold">תל אביב</text>
+
+                    <rect x="560" y="220" width="140" height="60" rx="10" fill="white" stroke="#18a058" stroke-width="3"/>
+                    <text x="630" y="256" text-anchor="middle" font-weight="bold">לונדון</text>
+
+                    <rect x="160" y="350" width="140" height="60" rx="10" fill="white" stroke="#18a058" stroke-width="3"/>
+                    <text x="230" y="386" text-anchor="middle" font-weight="bold">טוקיו</text>
+
+                    <rect x="420" y="350" width="140" height="60" rx="10" fill="#f2f4f8" stroke="#7a8194" stroke-width="2"/>
+                    <text x="490" y="378" text-anchor="middle" font-weight="bold" font-size="14">גיבוי</text>
+                    <text x="490" y="397" text-anchor="middle" font-size="12">עותק לא מקוון</text>
+                </svg>
+            </div>
+
+            <table>
+                <tr>
+                    <th>סניף</th>
+                    <th>תפקיד ברפליקציה</th>
+                </tr>
+                <tr>
+                    <td>סיאול</td>
+                    <td>מקור הנתונים הראשי: חשבונות משתמשים, קבצים משותפים ומסדי נתונים</td>
+                </tr>
+                <tr>
+                    <td>סן חוזה, בנגלור</td>
+                    <td>מחזיקים עותק מלא, ויכולים להחליף את סיאול אם המטה לא זמין</td>
+                </tr>
+                <tr>
+                    <td>תל אביב, לונדון, טוקיו</td>
+                    <td>מקבלים את הנתונים שהעובדים בסניף צריכים להתחברות ולעבודה</td>
+                </tr>
+            </table>
+
+            <h3>מתי הרפליקציה רצה</h3>
+            <p>
+                בין שרתים באותו סניף השכפול מתבצע כמעט מיד, כי הם מחוברים ברשת מקומית מהירה.
+                בין סניפים במדינות שונות השכפול רץ בפרקי זמן קבועים ובשיטה המצטברת,
+                כדי לא להעמיס על הקווים בין היבשות בשעות העבודה.
+            </p>
+
+            <div class="note">
+                רפליקציה היא לא גיבוי. אם קובץ נמחק או הוצפן על ידי תוכנת כופר בשרת אחד,
+                המחיקה תשוכפל לכל השאר. לכן בנוסף לרפליקציה צריך גיבוי נפרד, שנשמר מחוץ לרשת.
+            </div>
+        </section>
+
+        <section class="box" id="security">
+            <h2>אבטחת הרפליקציה</h2>
+            <p>
+                נתוני הרפליקציה כוללים מידע רגיש כמו חשבונות משתמשים והרשאות,
+                והם עוברים דרך ספק אינטרנט חיצוני. לכן הם חייבים להיות מוגנים:
+            </p>
+            <ul class="list">
+                <li><b>הצפנת התעבורה:</b> החיבור בין הסניפים עובר במנהרה מוצפנת (VPN עם IPsec), כך שמי שמאזין לקו לא יכול לקרוא את הנתונים.</li>
+                <li><b>רשימות גישה (ACL):</b> בנתבים מוגדר שרק שרתי הרפליקציה יכולים לתקשר זה עם זה בפורטים של השכפול.</li>
+                <li><b>אימות בין השרתים:</b> שרת מקבל עדכונים רק משרת שהוא מכיר ושהזדהה מולו.</li>
+                <li><b>הפרדה ב-VLAN:</b> השרתים נמצאים ב-VLAN נפרד מהעמדות של העובדים.</li>
+                <li><b>ניטור:</b> מנהל הרשת בודק שהשכפול מצליח ומקבל התראה כשסניף מפסיק להתעדכן.</li>
+            </ul>
+        </section>
+
+    </main>
+
+    <footer>
+        <span>מגיש: פורת קלופמן</span>
+        <span>מנחה הפרויקט: </span>
+    </footer>
+
+</body>
+</html>
